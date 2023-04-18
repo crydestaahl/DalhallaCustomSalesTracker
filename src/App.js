@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Fade } from 'react-awesome-reveal';
 import logo from './dalhalla.png';
@@ -39,10 +39,6 @@ function App() {
       .catch((error) => console.error(error));
   };
 
-  const handleExpand = (index) => {
-    setExpandedIndex(index === expandedIndex ? null : index);
-  };
-
   function formatTime(timeStr) {
     const date = new Date(timeStr);
     const isoString = date.toISOString();
@@ -66,18 +62,6 @@ function App() {
         {loading ? <p className='loading'>Laddar data</p> : <p></p>}
       </div>
     );
-  }
-
-  // Räkna ut hur många tickets som scannats
-  if (data) {
-    const totalScannedTickets = data.reduce((acc, item) => {
-      console.log(acc);
-
-      if (item.gfs && item.gfs.entrd) {
-        return acc + item.gfs.entrd;
-      }
-      return acc;
-    }, 0);
   }
 
   if (!data) {

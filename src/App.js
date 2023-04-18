@@ -59,7 +59,7 @@ function App() {
           placeholder='T ex 12345'
         />
         <button onClick={saveInput}>Hämta</button>
-        {loading ? <p className='loading'>Laddar data</p> : <p></p>}
+        {loading ? <p className='loading'>Laddar data. Detta kan ta lite tid om det är första gången du hämtar data på denna nyckeln.</p> : <p></p>}
       </div>
     );
   }

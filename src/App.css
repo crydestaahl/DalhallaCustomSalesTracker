@@ -37,7 +37,7 @@ body {
   border-radius: 20px 20px 20px 20px;
   height: auto;
   overflow: hidden;
-  max-width: 485px;
+  max-width: 308px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   transition: height 0.5s ease-in-out, width 0.5s ease-in-out;
 }

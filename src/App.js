@@ -76,7 +76,6 @@ function App() {
           placeholder='T ex 12345'
         />
         <button onClick={saveInput}>Hämta</button>
-
         {!loading ? '' : ''}
       </div>
     );
@@ -99,18 +98,10 @@ function App() {
                 <div className='eventInfo' key={item.erc}>
                   <h3 className='eventName'>{item.name}</h3>
                   <h4>Start: {formatTime(item.startLocal)}</h4>
-
-              
-
-                  <p>
-                    <b className='small'>Sålda biljetter inkl. fribiljetter:</b> {item.sales.soldQtyNet + item.sales.freeTktQtyNet}
-                  </p>
-                  
-
+                  <p><b className='small'>Sålda biljetter inkl. fribiljetter:</b> {item.sales.soldQtyNet + item.sales.freeTktQtyNet}</p>
                   <img src={item.img.thumb} alt={item.name} />
                   <div className='scannedTickets'></div>
-                </div>
-                {loading ? <p>Laddar data...</p> : ''}
+                </div>            
               </div>
             </Fade>
           ))}

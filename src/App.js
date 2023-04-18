@@ -6,9 +6,9 @@ import logo from './dalhalla.png';
 function App() {
   const [data, setData] = useState(null);
   const [expandedIndex] = useState(null);
-  const [inputData, setInputData] = useState('HD5W67');
+  const [inputData, setInputData] = useState('HHV0ZC');
   const [loading, setLoading] = useState(false); // state variable for loading status
-  const [apiKey, setApiKey] = useState('HD5W67');
+  const [apiKey, setApiKey] = useState('HHV0ZC');
 
   console.log(loading);
   const handleInput = (e) => {
@@ -100,35 +100,12 @@ function App() {
                   <h3 className='eventName'>{item.name}</h3>
                   <h4>Start: {formatTime(item.startLocal)}</h4>
 
-                  {item.gfs
-                    .filter(
-                      (ticket) =>
-                        ticket.type === 7 || ticket.name === 'Showbiljett'
-                    ) // filter out tickets that have type 1
-                    .map(
-                      (
-                        ticket // map over the filtered tickets
-                      ) => (
-                        <div className='ticketInfo'></div>
-                      )
-                    )}
+              
 
                   <p>
-                    <b>Sålda biljetter:</b> {item.sales.soldQtyNet}
+                    <b className='small'>Sålda biljetter inkl. fribiljetter:</b> {item.sales.soldQtyNet + item.sales.freeTktQtyNet}
                   </p>
-                  <p>
-                    <b>Total kapacitet exklusive holds/blockeringar:</b> {item.sales.remQtyOutsH}
-                  </p>
-
-                  <p>
-                  <b>Biljetter kvar att sälja exklusive holds/blockeringar:</b>{' '}
-                     
-                      {
-                        item.sales.remQtyOutsH - item.sales.soldQtyNet === '0'
-                        ? 'Slutsålt'
-                        : item.sales.remQtyOutsH - item.sales.soldQtyNet
-                      }
-                  </p>
+                  
 
                   <img src={item.img.thumb} alt={item.name} />
                   <div className='scannedTickets'></div>

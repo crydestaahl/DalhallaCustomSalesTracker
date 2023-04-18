@@ -5,7 +5,7 @@ import logo from './dalhalla.png';
 
 function App() {
   const [data, setData] = useState(null);
-  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [expandedIndex] = useState(null);
   const [inputData, setInputData] = useState('HD5W67');
   const [loading, setLoading] = useState(false); // state variable for loading status
   const [apiKey, setApiKey] = useState('HD5W67');

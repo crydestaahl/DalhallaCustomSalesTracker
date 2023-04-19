@@ -10,10 +10,6 @@ function App() {
   const [loading, setLoading] = useState(false); // state variable for loading status
   const [apiKey, setApiKey] = useState('HHV0ZC');
 
-  const handleInput = (e) => {
-    const newInput = e.target.value.toUpperCase();
-    setInputData(newInput.trim());
-  };
 
   useEffect(() => {
     const fetchData = () => {
@@ -35,13 +31,28 @@ function App() {
     fetchData();
   }, [apiKey]);
 
+  const handleFocus = () => {
+    setInputData('');
+  };
+
+  const handleInput = (e) => {
+    const newInput = e.target.value.toUpperCase();
+    setInputData(newInput.trim());
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      saveInput();
+    }
+  };
+
   const saveInput = () => {
-    localStorage.clear();
-    
+    setData('');
+
     if (inputData.length === 6) {
     localStorage.clear();
     setLoading(true);
-    setApiKey(inputData);
+    
     fetch(
       `https://proxyserversalestracker.onrender.com/https://manager.tickster.com/Statistics/SalesTracker/Api.ashx?keys=${apiKey.trim()}`
     )
@@ -50,6 +61,7 @@ function App() {
         setData(data);
         // Spara data i local storage -
         localStorage.setItem('cachedData', JSON.stringify(data));
+        setApiKey(inputData);
         setLoading(false);
       })
       .catch((error) => {
@@ -57,6 +69,7 @@ function App() {
       });
     } else {
       alert('Felaktig nyckel, försök igen.')
+      window.location.reload();
     }
   };
 
@@ -99,6 +112,8 @@ function App() {
           value={inputData}
           onChange={handleInput}
           placeholder='T ex 12345'
+          onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
         />
         <button onClick={saveInput}>Hämta</button>
         {!loading ? '' : ''}
@@ -111,6 +126,13 @@ function App() {
       <header className='App-header'>
         <div className='eventFeed'>
           <img src={logo} alt='Dalhalla' className='logo' />
+          {loading ? (
+            <p className='loading'>
+              Laddar data
+            </p>
+          ) : (
+            <p></p>
+          )}
           {data[0]?.ven?.vrc === 'AMEP2ZTG94GUJNV' ? (
             data.map((item, index) => (
               <Fade>
@@ -136,10 +158,9 @@ function App() {
                 </div>
               </Fade>
             ))
-          ) :  (
-            <p className='error'>Nyckeln tillhör inte Dalhalla</p>
-          )}
-
+          ) :   
+              <p className='error'>Nyckeln tillhör inte Dalhalla</p> 
+          }
         </div>
         <div className='keyInput'>
           <h3>Salestrackernyckel:</h3>
@@ -148,6 +169,8 @@ function App() {
             value={inputData}
             onChange={handleInput}
             placeholder='T ex 12345'
+            onKeyDown={handleKeyDown}
+            onFocus={handleFocus}
           />
           <p className='currentKey'>Nuvarande nyckel: {apiKey}</p>
           <button onClick={saveInput}>Hämta</button>

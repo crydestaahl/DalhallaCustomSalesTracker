@@ -36,8 +36,9 @@ function App() {
   }, [apiKey]);
 
   const saveInput = () => {
+    localStorage.clear();
+    
     if (inputData.length === 6) {
-
     localStorage.clear();
     setLoading(true);
     setApiKey(inputData);
@@ -54,7 +55,6 @@ function App() {
       .catch((error) => {
         console.error(error);
       });
-
     } else {
       alert('Felaktig nyckel, försök igen.')
     }
@@ -136,9 +136,10 @@ function App() {
                 </div>
               </Fade>
             ))
-          ) : (
+          ) :  (
             <p className='error'>Nyckeln tillhör inte Dalhalla</p>
           )}
+
         </div>
         <div className='keyInput'>
           <h3>Salestrackernyckel:</h3>
@@ -150,7 +151,7 @@ function App() {
           />
           <p className='currentKey'>Nuvarande nyckel: {apiKey}</p>
           <button onClick={saveInput}>Hämta</button>
-        </div>
+        </div>        
       </header>
     </div>
   );

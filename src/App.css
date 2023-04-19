@@ -67,11 +67,24 @@ body {
 
 .loading {
   animation: loadingAnimation infinite 2s;
+  text-align: center;
+}
+
+.loadingText {
+  text-align: center;
+}
+
+.currentKey {
+  font-size: small;
 }
 
 .small {
   font-size: small;
 }
+ .error {
+  color: red;
+}
+
 
 @keyframes loadingAnimation {
   0% {

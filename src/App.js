@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Fade } from 'react-awesome-reveal';
 import logo from './dalhalla.png';
@@ -6,25 +6,41 @@ import logo from './dalhalla.png';
 function App() {
   const [data, setData] = useState(null);
   const [expandedIndex] = useState(null);
-  const [inputData, setInputData] = useState('HHV0ZC');
+  const [inputData, setInputData] = useState('');
   const [loading, setLoading] = useState(false); // state variable for loading status
   const [apiKey, setApiKey] = useState('HHV0ZC');
 
-  console.log(loading);
   const handleInput = (e) => {
-    console.log(e.target.value);
     const newInput = e.target.value.toUpperCase();
-    setInputData(newInput);
-    setApiKey(newInput);
-    console.log('detta är ' + apiKey);
+    setInputData(newInput.trim());
   };
 
+  useEffect(() => {
+    const fetchData = () => {
+      localStorage.clear();
+      setLoading(true);
+
+      fetch(
+        `https://proxyserversalestracker.onrender.com/https://manager.tickster.com/Statistics/SalesTracker/Api.ashx?keys=${apiKey.trim()}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data);
+          // Spara data i local storage -
+          localStorage.setItem('cachedData', JSON.stringify(data));
+          setLoading(false);
+        })
+        .catch((error) => console.error(error));
+    };
+    fetchData();
+  }, [apiKey]);
+
   const saveInput = () => {
+    if (inputData.length === 6) {
+
     localStorage.clear();
     setLoading(true);
-    const url = `https://proxyserversalestracker.onrender.com/https://manager.tickster.com/Statistics/SalesTracker/Api.ashx?keys=${apiKey.trim()}`;
-    console.log(url);
-
+    setApiKey(inputData);
     fetch(
       `https://proxyserversalestracker.onrender.com/https://manager.tickster.com/Statistics/SalesTracker/Api.ashx?keys=${apiKey.trim()}`
     )
@@ -33,10 +49,15 @@ function App() {
         setData(data);
         // Spara data i local storage -
         localStorage.setItem('cachedData', JSON.stringify(data));
-        console.log(data);
         setLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+      });
+
+    } else {
+      alert('Felaktig nyckel, försök igen.')
+    }
   };
 
   function formatTime(timeStr) {
@@ -51,15 +72,19 @@ function App() {
     return (
       <div className='keyInput'>
         <img src={logo} alt='Dalhalla' className='logo' />
-        <h3>Salestrackernyckel:</h3>
-        <input
-          type='text'
-          value={inputData}
-          onChange={handleInput}
-          placeholder='T ex 12345'
-        />
-        <button onClick={saveInput}>Hämta</button>
-        {loading ? <p className='loading'>Laddar data. Detta kan ta lite tid om det är första gången du hämtar data på denna nyckeln.</p> : <p></p>}
+        {loading ? (
+          <div>
+          <p className='loading'>
+            Laddar data
+          </p>
+          <p className='loadingText'>
+            Detta kan ta lite tid om det är första gången du hämtar
+            data på denna nyckeln.
+          </p>
+          </div>
+        ) : (
+          <p></p>
+        )}
       </div>
     );
   }
@@ -86,25 +111,34 @@ function App() {
       <header className='App-header'>
         <div className='eventFeed'>
           <img src={logo} alt='Dalhalla' className='logo' />
-          {data.map((item, index) => (
-            <Fade>
-              <div
-                className={`eventCard ${
-                  index === expandedIndex ? 'transition' : ''
-                }`}
-                key={item.erc}
-                loading='lazy'
-              >
-                <div className='eventInfo' key={item.erc}>
-                  <h3 className='eventName'>{item.name}</h3>
-                  <h4>Start: {formatTime(item.startLocal)}</h4>
-                  <p><b className='small'>Sålda biljetter inkl. fribiljetter:</b> {item.sales.soldQtyNet + item.sales.freeTktQtyNet}</p>
-                  <img src={item.img.thumb} alt={item.name} />
-                  <div className='scannedTickets'></div>
-                </div>            
-              </div>
-            </Fade>
-          ))}
+          {data[0]?.ven?.vrc === 'AMEP2ZTG94GUJNV' ? (
+            data.map((item, index) => (
+              <Fade>
+                <div
+                  className={`eventCard ${
+                    index === expandedIndex ? 'transition' : ''
+                  }`}
+                  key={item.erc}
+                  loading='lazy'
+                >
+                  <div className='eventInfo' key={item.erc}>
+                    <h3 className='eventName'>{item.name}</h3>
+                    <h4>Start: {formatTime(item.startLocal)}</h4>
+                    <p>
+                      <b className='small'>
+                        Sålda biljetter inkl. fribiljetter:
+                      </b>{' '}
+                      {item.sales.soldQtyNet + item.sales.freeTktQtyNet}
+                    </p>
+                    <img src={item.img.thumb} alt={item.name} />
+                    <div className='scannedTickets'></div>
+                  </div>
+                </div>
+              </Fade>
+            ))
+          ) : (
+            <p className='error'>Nyckeln tillhör inte Dalhalla</p>
+          )}
         </div>
         <div className='keyInput'>
           <h3>Salestrackernyckel:</h3>
@@ -114,6 +148,7 @@ function App() {
             onChange={handleInput}
             placeholder='T ex 12345'
           />
+          <p className='currentKey'>Nuvarande nyckel: {apiKey}</p>
           <button onClick={saveInput}>Hämta</button>
         </div>
       </header>

@@ -6,10 +6,9 @@ import logo from './dalhalla.png';
 function App() {
   const [data, setData] = useState(null);
   const [expandedIndex] = useState(null);
-  const [inputData, setInputData] = useState('');
+  const [inputData, setInputData] = useState('HHV0ZC');
   const [loading, setLoading] = useState(false); // state variable for loading status
   const [apiKey, setApiKey] = useState('HHV0ZC');
-
 
   useEffect(() => {
     const fetchData = () => {
@@ -21,6 +20,7 @@ function App() {
       )
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           setData(data);
           // Spara data i local storage -
           localStorage.setItem('cachedData', JSON.stringify(data));
@@ -44,6 +44,10 @@ function App() {
     if (e.key === 'Enter') {
       saveInput();
     }
+  };
+
+  const refresh = () => {
+    window.location.reload();
   };
 
   const saveInput = () => {
@@ -121,6 +125,7 @@ function App() {
     );
   }
 
+
   return (
     <div className='App'>
       <header className='App-header'>
@@ -133,7 +138,7 @@ function App() {
           ) : (
             <p></p>
           )}
-          {data[0]?.ven?.vrc === 'AMEP2ZTG94GUJNV' ? (
+          {!loading && data[0]?.ven?.vrc === 'AMEP2ZTG94GUJNV' ? (
             data.map((item, index) => (
               <Fade>
                 <div
@@ -161,9 +166,12 @@ function App() {
           ) :   
               <p className='error'>Nyckeln tillhör inte Dalhalla</p> 
           }
+          <button className="refresh" onClick={refresh}>Ladda om sidan</button>
         </div>
+        
+        
         <div className='keyInput'>
-          <h3>Salestrackernyckel:</h3>
+          <p className="currentKey">Ladda data från en annan nyckel:</p>
           <input
             type='text'
             value={inputData}

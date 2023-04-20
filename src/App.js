@@ -179,7 +179,6 @@ function App() {
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
           />
-          <p className='currentKey'>Nuvarande nyckel: {apiKey}</p>
           <button onClick={saveInput}>Hämta</button>
         </div>        
       </header>

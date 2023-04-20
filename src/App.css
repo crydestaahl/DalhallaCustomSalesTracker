@@ -21,6 +21,7 @@ body {
   flex-direction: column;
   align-items: center;
   color: #e7e8d2;
+  animation: slowRender .7s;
 }
 
 .eventFeed {
@@ -40,6 +41,7 @@ body {
   max-width: 308px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   transition: height 0.5s ease-in-out, width 0.5s ease-in-out;
+  animation: slowRender .7s;
 }
 
 .eventName {
@@ -84,10 +86,12 @@ body {
 }
  .error {
   color: red;
+  animation: slowRender .7s;
 }
 
 .refresh {
-  background-color: #ffd72e;
+  background-color: #ffd72e; 
+  animation: slowRender .7s;
 }
 
 
@@ -101,6 +105,13 @@ body {
   100% {
     transform: scale(0.75);
   }
+}
+
+@keyframes slowRender {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  90% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 h4,

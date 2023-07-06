@@ -6,7 +6,6 @@ import logo from './dalhalla.png';
 function App() {
   const [data, setData] = useState(null);
   const [expandedIndex] = useState(null);
-  const [inputData, setInputData] = useState('HHV0ZC');
   const [loading, setLoading] = useState(false); // state variable for loading status
   const [apiKey, setApiKey] = useState('HHV0ZC');
   const [lastWorkingKey, setLastWorkingKey] = useState('');
@@ -26,8 +25,7 @@ function App() {
           setData(data);
           // Spara data i local storage -
           if (data[0].ven.vrc === 'AMEP2ZTG94GUJNV') {
-            localStorage.setItem('cachedData', JSON.stringify(data));
-            setApiKey(inputData);
+            localStorage.setItem('cachedData', JSON.stringify(data));           
             setLastWorkingKey(apiKey);
             setLoading(false);
           }
@@ -57,53 +55,8 @@ function App() {
     return formattedDate + ' ' + formattedTime;
   }
 
-  const handleFocus = () => {
-    setInputData('');
-  };
-
-  const handleInput = (e) => {
-    const newInput = e.target.value.toUpperCase();
-    setInputData(newInput.trim());
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      saveInput();
-    }
-  };
-
   const refresh = () => {
     setApiKey(lastWorkingKey);
-  };
-
-  const saveInput = () => {
-    setData('');
-
-    if (inputData.length === 6) {
-      localStorage.clear();
-      setLoading(true);
-      setLastWorkingKey(apiKey);
-
-      fetch(
-        `https://proxyserversalestracker.onrender.com/https://manager.tickster.com/Statistics/SalesTracker/Api.ashx?keys=${apiKey.trim()}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setData(data);
-          // Spara data i local storage -
-          localStorage.setItem('cachedData', JSON.stringify(data));
-          setApiKey(inputData);
-          setLastWorkingKey(apiKey);
-          localStorage.setItem('lastWorkingKey', JSON.stringify(apiKey));
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      alert('Felaktig nyckel, försök igen.');
-      window.location.reload();
-    }
   };
 
   if (!data) {
@@ -130,16 +83,6 @@ function App() {
       <div className='keyInput'>
         <img src={logo} alt='Dalhalla' className='logo' />
         <h3>Salestrackernyckel:</h3>
-        <input
-          type='text'
-          value={inputData}
-          onChange={handleInput}
-          placeholder='T ex 12345'
-          onKeyDown={handleKeyDown}
-          onFocus={handleFocus}
-        />
-        <button onClick={saveInput}>Hämta</button>
-        {!loading ? '' : ''}
       </div>
     );
   }

@@ -22,6 +22,7 @@ function App() {
       )
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           setData(data);
           // Spara data i local storage -
           if (data[0].ven.vrc === 'AMEP2ZTG94GUJNV') {
@@ -128,12 +129,16 @@ function App() {
                       {item.gfs
                         .filter(
                           (ticket) =>
-                            ticket.type === 5 &&
-                            ticket.name !== 'VIP Acess Bakre Loge' &&
-                            ticket.name !== 'Avbeställningsskydd' &&
-                            ticket.name !== '3-Rätters meny - Konsertmiddag' &&
-                            ticket.name !== 'VIP Acess Främre Loge' &&
-                            ticket.name !== 'VIP Access'
+                            ((ticket.type === 5 || ticket.type === 0) && // Group the ticket type conditions
+                              ticket.name !== 'VIP Acess Bakre Loge' &&
+                              ticket.name !== 'VIP Access - Tillval' &&
+                              ticket.name !== '3-Rättersmeny - Tillval' &&
+                              ticket.name !== 'Avbeställningsskydd' &&
+                              ticket.name !== '3-Rätters meny - Konsertmiddag' &&
+                              ticket.name !== 'VIP Acess Främre Loge' &&
+                              ticket.name !== 'VIP Access') ||
+                            (ticket.name === 'Restaurangbuss - Tur & Retur' || // Group the ticket name conditions
+                              ticket.name === 'Restaurangbuss - Hemresa')
                         )
                         .map((ticket) => (
                           <div className='ticketInfo'>

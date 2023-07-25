@@ -123,22 +123,41 @@ function App() {
                         display: activeIndex === item.erc ? 'block' : 'none',
                       }}
                     >
-                      <h4>Bussbiljetter</h4>
+                      <h3>Bussbiljetter</h3>
                       <br></br>
 
+                      <h3 style={{ borderBottom: '1px solid #333' }}>Restaurangbuss - Hemresa</h3>
                       {item.gfs
                         .filter(
                           (ticket) =>
-                            ((ticket.type === 5 || ticket.type === 0) && // Group the ticket type conditions
-                              ticket.name !== 'VIP Acess Bakre Loge' &&
-                              ticket.name !== 'VIP Access - Tillval' &&
-                              ticket.name !== '3-Rättersmeny - Tillval' &&
-                              ticket.name !== 'Avbeställningsskydd' &&
-                              ticket.name !== '3-Rätters meny - Konsertmiddag' &&
-                              ticket.name !== 'VIP Acess Främre Loge' &&
-                              ticket.name !== 'VIP Access') ||
-                            (ticket.name === 'Restaurangbuss - Tur & Retur' || // Group the ticket name conditions
-                              ticket.name === 'Restaurangbuss - Hemresa')
+                              ticket.name === 'BORLÄNGE RESECENTRUM BUSSTERM.' ||
+                              ticket.name === 'DALECARLIA' ||
+                              ticket.name === 'DJURÅS BUSSTATION, S INDUSTRIV' ||
+                              ticket.name === 'FALUN RESECENTRUM' ||
+                              ticket.name === 'FALUN SCANDIC LUGNET HPL HÖGSK' ||
+                              ticket.name === 'FIRST HOTEL GYLLENE HORNET' ||
+                              ticket.name === 'GREEN HOTEL' ||
+                              ticket.name === 'GRYCKSBOKROGEN HPL RV69' ||
+                              ticket.name === 'GÄVLE RESECENTRUM' ||
+                              ticket.name === 'HOFORS BUSSTATION' ||  
+                              ticket.name === 'INSJÖN HJULTORGET HPL RV70' ||
+                              ticket.name === 'KLOCKARGÅRDEN' ||
+                              ticket.name === 'LUDVIKA BUSSTATION' ||
+                              ticket.name === 'LEKSAND HOTELL MOSKOGEN' ||
+                              ticket.name === 'LEKSAND RESECENTRUM STATIONSG.' ||
+                              ticket.name === 'LEKSAND STRAND SILJANSVÄGEN' ||
+                              ticket.name === 'MORA RESECENTRUM' || 
+                              ticket.name === 'MORA HOTELL HPL MORASTRAND' ||
+                              ticket.name === 'MORAPARKEN SIMHALLEN' ||
+                              ticket.name === 'ORSA BUSSTATION' ||
+                              ticket.name === 'SANDVIKEN RESECENTRUM' ||
+                              ticket.name === 'TÄLLBERGSGÅRDEN' ||
+                              ticket.name === 'UTBY MAJSTÅNGEN' ||
+                              ticket.name === 'VIKARBYN HEMKÖP' ||
+                              ticket.name === 'VILLA LÅNGBERS' ||
+                              ticket.name === 'ÅKERBLADS' ||
+                              ticket.name === 'BJURSÅS KORSVÄGEN' ||
+                              ticket.name === 'ÄLVDALEN STF VANDRARHEM'
                         )
                         .map((ticket) => (
                           <div className='ticketInfo'>
@@ -152,6 +171,81 @@ function App() {
                             <br></br>
                           </div>
                         ))}
+                       
+                        <h3 style={{ borderBottom: '1px solid #333' }}>Konsertbuss - Tur & Retur</h3>
+                        {item.gfs
+                          .filter(
+                            (ticket) =>
+                                ticket.name === 'GÄVLE RESECENTRUM 15:30' ||
+                                ticket.name === 'LUDVIKA RESECENTRUM 16:00' ||
+                                ticket.name === 'SANDVIKEN RESECENTRUM 16:00' ||   
+                                ticket.name === 'HOFORS BUSSTATION 16:35' ||
+                                ticket.name === 'BORLÄNGE RESECENTRUM 16:45' ||
+                                ticket.name === 'DJURÅS BUSSTATION 17:05' ||
+                                ticket.name === 'ORSA BUSSTATION 17:10' ||
+                                ticket.name === 'FALUN RESECENTRUM 17:15' ||
+                                ticket.name === 'INSJÖN HJULTORGET 17.20' ||
+                                ticket.name === 'FALUN SCANDIC LUGNET HPL 17:25' ||
+                                ticket.name === 'GRYCKSBOKROGEN HPL RV69, 17:30' ||  
+                                ticket.name === 'MORAPARKEN SIMHALLEN, 17:30' ||
+                                ticket.name === 'LEKSAND HOTELL MOSKOGEN, 17:35' ||
+                                ticket.name === 'MORA HOTELL, MORASTRAND 17:35' ||
+                                ticket.name === 'BJURSÅS KORSVÄGEN, 17:35' ||
+                                ticket.name === 'LEKSAND RESECENTRUM 17:40' ||
+                                ticket.name === 'LEKSAND STRAND SILJANSV. 17:45' ||
+                                ticket.name === 'MORA RESECENTRUM, 17:45' ||
+                                ticket.name === 'DALECARLIA, 18:00' ||
+                                ticket.name === 'FIRST HOTEL GYLLENE HORN 18:00' ||
+                                ticket.name === 'GREEN HOTEL, 18:00' ||
+                                ticket.name === 'KLOCKARGÅRDEN, 18:00' ||
+                                ticket.name === 'RÄTTVIK - HANTVERKSBYN, 18:00' ||
+                                ticket.name === 'TÄLLBERGSGÅRDEN, 18:00' ||
+                                ticket.name === 'VILLA LÅNGBERS, 18:00' ||
+                                ticket.name === 'ÅKERBLADS, 18:00' ||
+                                ticket.name === 'VIKARBYN HEMKÖP, 18:05' ||
+                                ticket.name === 'RÄTTVIK BW LERDALSHÖJDEN 18:10' ||
+                                ticket.name === 'UTBY MAJSTÅNGEN, 18:10' ||
+                                ticket.name === 'RÄTTVIK ENÅBADET - RV301,18:15' ||
+                                ticket.name === 'RÄTTVIK STIFTSGÅRDEN, 18:15' ||
+                                ticket.name === 'RÄTTVIK RESECENTRUM, 18:25' ||
+                                ticket.name === 'ÄLVDALEN STF VANDRARHEM, 18:30' 
+                          )
+                          .map((ticket) => (
+                            <div className='ticketInfo'>
+                              <h4>
+                                <b>{ticket.name + ':'}</b>
+                              </h4>
+                              <h4>
+                                Sålt antal:{' '}
+                                <b>{ticket.soldQtyNet + ticket.freeTktQtyNet} </b>
+                              </h4>
+                              <br></br>
+                            </div>
+                          ))}
+
+                          <h3 style={{ borderBottom: '1px solid #333' }}>Restaurangbuss - Tur & Retur</h3>
+                          {item.gfs
+                            .filter(
+                              (ticket) =>
+                                  ticket.name === 'HANTVERKSBYN, 16:20' ||
+                                  ticket.name === 'BW HOTELL LERDALSHÖJDEN 16.25' ||
+                                  ticket.name === 'ENÅBADET - HPL RV301, 16:30' ||
+                                  ticket.name === 'STIFTSGÅRDEN, 16:30' ||
+                                  ticket.name === 'RÄTTVIK RESECENTRUM, 16:35' ||
+                                  ticket.name === 'RÄTTVIK STIFTSGÅRDEN, 16:40' 
+                            )
+                            .map((ticket) => (
+                              <div className='ticketInfo'>
+                                <h4>
+                                  <b>{ticket.name + ':'}</b>
+                                </h4>
+                                <h4>
+                                  Sålt antal:{' '}
+                                  <b>{ticket.soldQtyNet + ticket.freeTktQtyNet} </b>
+                                </h4>
+                                <br></br>
+                              </div>
+                            ))}
                     </div>
 
                     {notToggled && (

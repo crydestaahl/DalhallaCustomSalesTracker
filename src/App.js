@@ -166,7 +166,7 @@ function App() {
                             </h4>
                             <h4>
                               Sålt antal:{' '}
-                              <b>{ticket.soldQtyNet + ticket.freeTktQtyNet} </b>
+                              <b>{ticket.soldQtyNet + ticket.freeTktQtyNet + ticket.issuedQtyNet} </b>
                             </h4>
                             <br></br>
                           </div>
@@ -217,7 +217,7 @@ function App() {
                               </h4>
                               <h4>
                                 Sålt antal:{' '}
-                                <b>{ticket.soldQtyNet + ticket.freeTktQtyNet} </b>
+                                <b>{ticket.soldQtyNet + ticket.freeTktQtyNet + ticket.issuedQtyNet} </b>
                               </h4>
                               <br></br>
                             </div>
@@ -241,7 +241,7 @@ function App() {
                                 </h4>
                                 <h4>
                                   Sålt antal:{' '}
-                                  <b>{ticket.soldQtyNet + ticket.freeTktQtyNet} </b>
+                                  <b>{ticket.soldQtyNet + ticket.freeTktQtyNet + ticket.issuedQtyNet} </b>
                                 </h4>
                                 <br></br>
                               </div>
